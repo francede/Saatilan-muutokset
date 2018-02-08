@@ -1,22 +1,28 @@
+/*
+*@author Francesco de Lorenzo
+*Ennakkotehtävä
+*/
+
+
+//check that temperature contains only digits and max one decimal point
 //returns number or NaN:
 function checkNumber(n) {
-    //check that temperature contains only digits and max one decimal point
-    var validNumber = true;    //is false if string is not a valid temperature
+    var validNumber = true;     //is false if string is not a valid temperature
     var containsDot = false;    //is true if it contains one decimal point
-    var isNegative = false;
+    var isNegative = false;     //is true only if first char is "-"
     var newString = "";
     
     for (var i = 0; i < n.length; i++) {    //check every index
-        var letter = n.substr(i, 1);
-        if (!containsDot && (letter === "." || letter === ",")) {   //can contain one decimal point
-            newString = newString + "."; //want "." instead of ","
+        var char = n.substr(i, 1);
+        if (!containsDot && (char === "." || char === ",")) {   //checks for one decimal point
+            newString = newString + ".";
             containsDot = true;
-        } else if (letter == "-" && i == 0) {
+        } else if (char == "-" && i == 0) {
             isNegative = true;
-        } else if (isNaN(letter)) { //n not valid -> return  NaN
+        } else if (isNaN(char)) {
             return NaN;
         } else {
-            newString = newString + letter; //concat letter to newString
+            newString = newString + char;
         }
     }
     if (isNegative) {
@@ -36,10 +42,10 @@ function checkStorage() {
 
 //returns array of objects for given city from localStorage
 //returns empty array if no storage found for given city
-function getStorage(kaupunki) {
+function getStorage(city) {
     var array;
     if(!checkStorage) {return;}
-    array = JSON.parse(localStorage.getItem(kaupunki))
+    array = JSON.parse(localStorage.getItem(city))
     if(array == null){
         array = [];
     }
@@ -47,38 +53,44 @@ function getStorage(kaupunki) {
 }
 
 //stores given temperature to given city's localStorage:
-function storeHavainto(kaupunki, lampo){
-    if (!checkStorage()) {//checks storage
+function storeEntry(city, temperature){
+    if (!checkStorage()) {
         return;
     }          
-    var time = new Date().getTime();    //gets current time in millis
-    var obj = {temperature:lampo,time:time};  //creates object
-    var array = getStorage(kaupunki);       //gets storage, if any
-    array.push(obj);                        //adds object to array
+    var time = new Date().getTime();                //gets current time in millis
+    var obj = {temperature:temperature,time:time};  //creates object
+    var array = getStorage(city);                   //gets storage, if any
+    array.push(obj);                                //adds object to array
     var stringyArray = JSON.stringify(array);
-    localStorage.setItem(kaupunki, stringyArray);  //stores array
+    localStorage.setItem(city, stringyArray);       //stores array
 }
 
 //on lisää havainto -button press:
-function lisaaHavainto(){
-    var kaupunki = document.getElementById("kaupungit").value;  //gets city
-    var lampotila = document.getElementById("lampotila").value; //gets temperature value
-    var lampoNumber = checkNumber(lampotila);                   //check that temperature is valid
+function addEntry(){
+    var city = document.getElementById("kaupungit").value;
+    var temperatureRaw = document.getElementById("lampotila").value;
+    var temperature = checkNumber(temperatureRaw);
     
-    if (kaupunki === "default") {
+    if (city === "default") {
         alert("Valitse kaupunki");          //alert if no city chosen
         return;
-    } else if (Number.isNaN(lampoNumber)) {
+    } else if (Number.isNaN(temperature)) {
         alert("Väärä lämpötila");           //alert if no valid temperature input
         return;
+    } else if (temperature > 100){
+        alert("Liian suuri lämpötila");     //input range from -100 to 100
+        return;
+    } else if (temperature < -100){
+        alert("Liian pieni lämpötila");
+        return;
     }
-    storeHavainto(kaupunki, lampoNumber);   //stores if valid
+    storeEntry(city, temperature);
     update();
 }
 
-//retruns the object with the hightest temperature in given city
-function getMax(kaupunki) {
-    var array = getStorage(kaupunki);
+//retruns the object with the highest measured temperature in given city
+function getMax(city) {
+    var array = getStorage(city);
     if (array.length == 0){
         return "Ei havaintoja";
     }
@@ -86,9 +98,9 @@ function getMax(kaupunki) {
     return array[0];//returns temperature object   
 }
 
-//retruns the object with the lowest temperature in given city
-function getMin(kaupunki) {
-    var array = getStorage(kaupunki);
+//retruns the object with the lowest measured temperature in given city
+function getMin(city) {
+    var array = getStorage(city);
     if (array.length == 0){
         return "Ei havaintoja";
     }
@@ -97,16 +109,16 @@ function getMin(kaupunki) {
 }
 
 //retruns the object with the latest entry time(highest time)
-function getLast(kaupunki) {
-    var array = getStorage(kaupunki);
+function getLast(city) {
+    var array = getStorage(city);
     if (array.length == 0){
         return "Ei havaintoja";
     }
-    array.sort(function(a, b){return b.time-a.time})//sort array by time (descending)
-    return array[0];//returns temperature  object
+    array.sort(function(a, b){return b.time-a.time})    //sort array by time (descending)
+    return array[0];
 }
 
-//returns the string representation to put into the table
+//returns the string representation to show on the table
 function tempToString(object) {
     var str;
     if(object == "Ei havaintoja") {
@@ -123,30 +135,27 @@ function tempToString(object) {
     return str;
 }
 
-//removes all entries that are older than 24h and updates table
+//removes all entries that are older than 24h
 function update(){ 
-    var kaupungit = ["Tokio", "Helsinki", "New York", "Amsterdam", "Dubai"];//all cities
+    var cityList = ["Tokio", "Helsinki", "New York", "Amsterdam", "Dubai"];
     var array = null;
-    var kaupunki = null;
+    var city = null;
     var currentTime = new Date().getTime();
-    for (var i = 0; i<kaupungit.length; i++){ // goes through all cities in kaupungit
-        kaupunki = kaupungit[i];
-        array = getStorage(kaupunki);
+    for (var i = 0; i<cityList.length; i++){
+        city = cityList[i];
+        array = getStorage(city);
         for(var j = array.length - 1; j >= 0; j--){
-            if (array[j].time + 86400000 < currentTime){//24h = 86400000 milliseconds
-                array.splice(j, 1);                     //splices the object if older than 24h
+            if (array[j].time + 86400000 < currentTime){    //24h = 86400000 milliseconds
+                array.splice(j, 1);                         //splices the object if older than 24h
             }
         }
-        localStorage.setItem(kaupunki, JSON.stringify(array)); //updates the stored array
+        localStorage.setItem(city, JSON.stringify(array)); //updates the array to localStorage
     }
-    
-    
-    
-    
-    
-    
-    
-    //Update table:
+    updateTable();
+}
+
+//updates HTML table
+function updateTable(){
     document.getElementById("tok_max").innerHTML = tempToString(getMax("Tokio"));
     document.getElementById("tok_min").innerHTML = tempToString(getMin("Tokio"));
     document.getElementById("tok_last").innerHTML = tempToString(getLast("Tokio"));
@@ -163,9 +172,10 @@ function update(){
     document.getElementById("dub_min").innerHTML = tempToString(getMin("Dubai"));
     document.getElementById("dub_last").innerHTML = tempToString(getLast("Dubai"));
 }
+
 //Clears localStorage after confirmation
 function clearStorage() {
-    var conf = confirm("Varoitus: toiminto poistaa kaikki lisätyt havainnot. Jatketaanko?");
+    var conf = confirm("Varoitus: toiminto poistaa kaikki havainnot. Jatketaanko?");
     if (conf) {
         localStorage.clear();
         location.reload();

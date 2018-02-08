@@ -1,10 +1,8 @@
 <!doctype html>
-<!-- Ennakkotehtävä ohjelmistotuottajalle reaktoriin 
-    Tokio: 35.6584421,139.7328635
-    Helsinki: 60.1697530,24.9490830
-    New York: 40.7406905,-73.9938438
-    Amsterdam: 52.3650691,4.9040238
-    Dubai: 25.092535,55.1562243     -->
+<!-- 
+Ennakkotehtävä (kesätyö 2018)
+@author Francesco de Lorenzo
+-->
 
 <html>
 <head>
@@ -23,31 +21,31 @@
             <th>Viimesin havainto</th>
         </tr>
         <tr>
-            <td style="text-align:center">Tokio</td>
+            <td>Tokio</td>
             <td id="tok_max">Ei havaintoja</td>
             <td id="tok_min">Ei havaintoja</td>
             <td id="tok_last">Ei havaintoja</td>
         </tr>
         <tr>
-            <td style="text-align:center">Helsinki</td>
+            <td>Helsinki</td>
             <td id="hel_max">Ei havaintoja</td>
             <td id="hel_min">Ei havaintoja</td>
             <td id="hel_last">Ei havaintoja</td>
         </tr>
         <tr>
-            <td style="text-align:center">New York</td>
+            <td>New York</td>
             <td id="new_max">Ei havaintoja</td>
             <td id="new_min">Ei havaintoja</td>
             <td id="new_last">Ei havaintoja</td>
         </tr>
         <tr>
-            <td style="text-align:center">Amsterdam</td>
+            <td>Amsterdam</td>
             <td id="ams_max">Ei havaintoja</td>
             <td id="ams_min">Ei havaintoja</td>
             <td id="ams_last">Ei havaintoja</td>
         </tr>
         <tr>
-            <td style="text-align:center">Dubai</td>
+            <td>Dubai</td>
             <td id="dub_max">Ei havaintoja</td>
             <td id="dub_min">Ei havaintoja</td>
             <td id="dub_last">Ei havaintoja</td>
@@ -56,7 +54,6 @@
     <br>
     <br>
     <p>Lisää uusi havainto:</p>
-        
         <select id="kaupungit">
             <option value="default">Valitse kaupunki</option>
             <option value="Tokio">Tokio</option>
@@ -68,10 +65,10 @@
         <br>
         <br>
     
-    <input type=number placeholder="Syötä havaittu lämpötila" id="lampotila">
+    <input type=text placeholder="Havaittu lämpötila" id="lampotila">
     <br>
     <br>
-    <button type="button" onclick="lisaaHavainto()">Lisää uusi havainto</button>
+    <button type="button" onclick="addEntry()">Lisää uusi havainto</button>
     <button type="button" onclick="clearStorage()">Poista havainnot</button>
 </body>
 
