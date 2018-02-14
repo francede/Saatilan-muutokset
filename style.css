@@ -15,3 +15,16 @@ th{
     background-color: #f1f1f1;
     color:blue
 }
+
+.warning{
+    color: darkred;
+    border-color: red
+}
+
+.city{
+    font-weight: bold;
+}
+
+tr:hover{
+    background-color: lightgray;
+}

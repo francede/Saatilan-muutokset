@@ -20,37 +20,38 @@ Ennakkotehtävä (kesätyö 2018)
             <th>Min lämpötila (viim. 24h)</th>
             <th>Viimesin havainto</th>
         </tr>
-        <tr>
-            <td>Tokio</td>
+        <tr onmouseover="showCoordinates('Tokio')" onmouseout="showCoordinates()">
+            <td class="city">Tokio</td>
             <td id="tok_max">Ei havaintoja</td>
             <td id="tok_min">Ei havaintoja</td>
             <td id="tok_last">Ei havaintoja</td>
         </tr>
-        <tr>
-            <td>Helsinki</td>
+        <tr onmouseover="showCoordinates('Helsinki')" onmouseout="showCoordinates()">
+            <td class="city">Helsinki</td>
             <td id="hel_max">Ei havaintoja</td>
             <td id="hel_min">Ei havaintoja</td>
             <td id="hel_last">Ei havaintoja</td>
         </tr>
-        <tr>
-            <td>New York</td>
+        <tr onmouseover="showCoordinates('New York')" onmouseout="showCoordinates()">
+            <td class="city">New York</td>
             <td id="new_max">Ei havaintoja</td>
             <td id="new_min">Ei havaintoja</td>
             <td id="new_last">Ei havaintoja</td>
         </tr>
-        <tr>
-            <td>Amsterdam</td>
+        <tr onmouseover="showCoordinates('Amsterdam')" onmouseout="showCoordinates()">
+            <td class="city">Amsterdam</td>
             <td id="ams_max">Ei havaintoja</td>
             <td id="ams_min">Ei havaintoja</td>
             <td id="ams_last">Ei havaintoja</td>
         </tr>
-        <tr>
-            <td>Dubai</td>
+        <tr onmouseover="showCoordinates('Dubai')" onmouseout="showCoordinates()">
+            <td class="city">Dubai</td>
             <td id="dub_max">Ei havaintoja</td>
             <td id="dub_min">Ei havaintoja</td>
             <td id="dub_last">Ei havaintoja</td>
         </tr>
     </table>
+    <span id="coordinates">coords</span>
     <br>
     <br>
     <p>Lisää uusi havainto:</p>
@@ -69,7 +70,7 @@ Ennakkotehtävä (kesätyö 2018)
     <br>
     <br>
     <button type="button" onclick="addEntry()">Lisää uusi havainto</button>
-    <button type="button" onclick="clearStorage()">Poista havainnot</button>
+    <button class="warning" type="button" onclick="clearStorage()">Poista havainnot</button>
 </body>
 
 </html>

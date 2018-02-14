@@ -181,3 +181,23 @@ function clearStorage() {
         location.reload();
     }
 }
+
+//shows coordinates when hovering over a table row, null city clears the element
+function showCoordinates(givenCity) {
+    if(givenCity == undefined){
+        document.getElementById("coordinates").innerHTML = " ";
+        return;
+    }
+    var cityCoords = [{city:"Tokio", coords:"35.6584421, 139.7328635"},
+                      {city:"Helsinki", coords:"60.1697530, 24.9490830"},
+                      {city:"New York", coords:"40.7406905, -73.9938438"},
+                      {city:"Amsterdam", coords:"52.3650691, 4.9040238"},
+                      {city:"Dubai", coords:"25.092535, 55.1562243"}];
+    for(var i = 0; i < cityCoords.length; i++){
+        if(cityCoords[i].city == givenCity){
+            document.getElementById("coordinates").innerHTML = "Coordinates: " + cityCoords[i].coords;
+            return;
+        }
+    }
+    
+}
