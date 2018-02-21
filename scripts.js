@@ -1,17 +1,16 @@
-/*
+/**
 *@author Francesco de Lorenzo
-*Ennakkotehtävä
 */
 
 
 //check that temperature contains only digits and max one decimal point
 //returns number or NaN:
 function checkNumber(n) {
+    n = n.toString();
     var validNumber = true;     //is false if string is not a valid temperature
     var containsDot = false;    //is true if it contains one decimal point
     var isNegative = false;     //is true only if first char is "-"
     var newString = "";
-    
     for (var i = 0; i < n.length; i++) {    //check every index
         var char = n.substr(i, 1);
         if (!containsDot && (char === "." || char === ",")) {   //checks for one decimal point
@@ -19,7 +18,7 @@ function checkNumber(n) {
             containsDot = true;
         } else if (char == "-" && i == 0) {
             isNegative = true;
-        } else if (isNaN(char)) {
+        } else if (isNaN(char) || char == " ") {
             return NaN;
         } else {
             newString = newString + char;
@@ -75,13 +74,13 @@ function addEntry(){
         alert("Valitse kaupunki");          //alert if no city chosen
         return;
     } else if (Number.isNaN(temperature)) {
-        alert("Väärä lämpötila");           //alert if no valid temperature input
+        alert("Väärä lämpötila (lämpötila saa sisältää vain numeroita ja miinusmerkin)");//alert if no valid temperature input
         return;
     } else if (temperature > 100){
-        alert("Liian suuri lämpötila");     //input range from -100 to 100
+        alert("Liian suuri lämpötila (yläraja: 100)");     //input range from -100 to 100
         return;
     } else if (temperature < -100){
-        alert("Liian pieni lämpötila");
+        alert("Liian pieni lämpötila (alaraja: -100)");
         return;
     }
     storeEntry(city, temperature);
