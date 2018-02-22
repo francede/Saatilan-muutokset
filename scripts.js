@@ -3,11 +3,11 @@
 */
 
 
-//check that temperature contains only digits and max one decimal point
+//check that number n contains only digits and max one decimal point
 //returns number or NaN:
 function checkNumber(n) {
     n = n.toString();
-    var validNumber = true;     //is false if string is not a valid temperature
+    var validNumber = true;     //is false if string is not a valid number
     var containsDot = false;    //is true if it contains one decimal point
     var isNegative = false;     //is true only if first char is "-"
     var newString = "";

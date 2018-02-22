@@ -1,23 +1,23 @@
 describe("Test checkNumber()", function() {
-    var n = 0;
+    var n;
     it("Positive integer", function() {
         n = 20;
-        expect(checkNumber(n)).toBe(n);
+        expect(checkNumber(n)).toEqual(n);
     });
     
     it("Positive float", function() {
         n = 35.5;
-        expect(checkNumber(n)).toBe(n);
+        expect(checkNumber(n)).toEqual(n);
     });
     
     it("Negative integer", function() {
         n = -15;
-        expect(checkNumber(n)).toBe(n);
+        expect(checkNumber(n)).toEqual(n);
     });
     
     it("Negative float", function() {
         n = -1.33;
-        expect(checkNumber(n)).toBe(n);
+        expect(checkNumber(n)).toEqual(n);
     });
     
     it("Contains letter", function() {
@@ -37,15 +37,14 @@ describe("Test checkNumber()", function() {
     
     it("Integer as string", function() {
         n = "22";
-        expect(checkNumber(n)).toBe(parseInt(n));
+        expect(checkNumber(n)).toEqual(parseInt(n));
     });
 });
 
 describe("Test storage functions", function() {
     var mockStorage, city1, city2, object1, object2;
     
-    //Inits a mock localStorage for testing by adding spies to setItem and getItem
-    //and by adding a few entries
+    //Inits a mock localStorage
     beforeEach(function() {
         city1 = "Tokio";
         city2 = "Stockholm";
@@ -77,17 +76,12 @@ describe("Test storage functions", function() {
         });
     });
     
-    it("1 entry, getStorage()", function() {
-        expect(getStorage("Tokio")).toEqual([{temperature:22.5,time:new Date(1262304000000).getTime()}]);
-    });
-    
-    it("multiple entries, getStorage()", function() {
-        expect(getStorage("Stockholm")[0]).toEqual({temperature:10,time:1262304000000+10000000});
+    it("getStorage(), 1 entry", function() {
+        expect(getStorage("Tokio")).toEqual([{temperature:22.5,time:1262304000000}]);
         expect(getStorage("Stockholm")[1]).toEqual({temperature:-20,time:1262304000000+20000000});
-        expect(getStorage("Stockholm")[5]).toEqual({temperature:-10,time:1262304000000+40000000});
     });
     
-    it("0 entries, getStorage()", function() {
+    it("getStorage(), 0 entries", function() {
         expect(getStorage("Tampere")).toEqual([]);
     });
     

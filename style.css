@@ -1,30 +1,31 @@
-table, th, td{
+table, th, td {
     width: 25%;
     border: 1px solid black;   
 }
 
-table{
+table {
     border-collapse: collapse;
+    width: 100%;
 }
 
-td{
+td {
     text-align: center;
 }
 
-th{
+th {
     background-color: #f1f1f1;
-    color:blue
+    color: blue
 }
 
-.warning{
+.warning {
     color: darkred;
     border-color: red
 }
 
-.city{
+.city {
     font-weight: bold;
 }
 
-tr:hover{
+tr:hover {
     background-color: lightgray;
 }
